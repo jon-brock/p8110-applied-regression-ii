@@ -69,7 +69,7 @@ q1_fit <- survfit(Surv(time = time_to_infection, event = infection) ~ treatment,
 ``` r
 q1_fit %>% 
     broom::tidy() %>% 
-    filter(strata == "treatment=0") %>% 
+    filter(strata == "treatment=0" & !n.event == 0) %>% 
     knitr::kable(digits = 5) %>% 
     print(n = Inf)
 ```
@@ -88,40 +88,21 @@ q1_fit %>%
     ## |    9|     50|       2|        1|  0.75239|   0.06942|   0.86205|  0.65668|treatment=0 |
     ## |   10|     47|       1|        2|  0.73638|   0.07267|   0.84911|  0.63862|treatment=0 |
     ## |   11|     44|       2|        0|  0.70291|   0.07977|   0.82187|  0.60117|treatment=0 |
-    ## |   12|     42|       0|        2|  0.70291|   0.07977|   0.82187|  0.60117|treatment=0 |
     ## |   13|     40|       1|        0|  0.68534|   0.08370|   0.80750|  0.58165|treatment=0 |
-    ## |   14|     39|       0|        1|  0.68534|   0.08370|   0.80750|  0.58165|treatment=0 |
-    ## |   16|     38|       0|        3|  0.68534|   0.08370|   0.80750|  0.58165|treatment=0 |
-    ## |   18|     35|       0|        2|  0.68534|   0.08370|   0.80750|  0.58165|treatment=0 |
     ## |   19|     33|       1|        1|  0.66457|   0.08917|   0.79149|  0.55800|treatment=0 |
-    ## |   20|     31|       0|        1|  0.66457|   0.08917|   0.79149|  0.55800|treatment=0 |
     ## |   21|     30|       1|        2|  0.64242|   0.09540|   0.77450|  0.53286|treatment=0 |
     ## |   23|     27|       1|        0|  0.61862|   0.10260|   0.75641|  0.50594|treatment=0 |
-    ## |   25|     26|       0|        1|  0.61862|   0.10260|   0.75641|  0.50594|treatment=0 |
-    ## |   26|     25|       0|        1|  0.61862|   0.10260|   0.75641|  0.50594|treatment=0 |
-    ## |   27|     24|       0|        1|  0.61862|   0.10260|   0.75641|  0.50594|treatment=0 |
-    ## |   28|     23|       0|        2|  0.61862|   0.10260|   0.75641|  0.50594|treatment=0 |
-    ## |   29|     21|       0|        3|  0.61862|   0.10260|   0.75641|  0.50594|treatment=0 |
     ## |   32|     18|       1|        2|  0.58425|   0.11745|   0.73548|  0.46412|treatment=0 |
-    ## |   34|     15|       0|        1|  0.58425|   0.11745|   0.73548|  0.46412|treatment=0 |
-    ## |   38|     14|       0|        1|  0.58425|   0.11745|   0.73548|  0.46412|treatment=0 |
-    ## |   39|     13|       0|        2|  0.58425|   0.11745|   0.73548|  0.46412|treatment=0 |
-    ## |   40|     11|       0|        1|  0.58425|   0.11745|   0.73548|  0.46412|treatment=0 |
-    ## |   43|     10|       0|        2|  0.58425|   0.11745|   0.73548|  0.46412|treatment=0 |
     ## |   44|      8|       1|        0|  0.51122|   0.17791|   0.72451|  0.36072|treatment=0 |
-    ## |   46|      7|       0|        1|  0.51122|   0.17791|   0.72451|  0.36072|treatment=0 |
     ## |   47|      6|       1|        1|  0.42602|   0.25492|   0.70213|  0.25849|treatment=0 |
     ## |   51|      4|       1|        0|  0.31951|   0.38512|   0.67968|  0.15020|treatment=0 |
-    ## |   56|      3|       0|        1|  0.31951|   0.38512|   0.67968|  0.15020|treatment=0 |
-    ## |   60|      2|       0|        1|  0.31951|   0.38512|   0.67968|  0.15020|treatment=0 |
-    ## |   97|      1|       0|        1|  0.31951|   0.38512|   0.67968|  0.15020|treatment=0 |
 
 ##### Body-Cleansing Group
 
 ``` r
 q1_fit %>% 
     broom::tidy() %>% 
-    filter(strata == "treatment=1") %>% 
+    filter(strata == "treatment=1" & !n.event == 0) %>% 
     knitr::kable(digits = 5) %>% 
     print(n = Inf)
 ```
@@ -134,38 +115,14 @@ q1_fit %>%
     ## |    3|     81|       1|        0|  0.95238|   0.02440|   0.99903|  0.90791|treatment=1 |
     ## |    4|     80|       1|        0|  0.94048|   0.02745|   0.99246|  0.89122|treatment=1 |
     ## |    5|     79|       5|        0|  0.88095|   0.04011|   0.95300|  0.81435|treatment=1 |
-    ## |    7|     74|       0|        1|  0.88095|   0.04011|   0.95300|  0.81435|treatment=1 |
     ## |    8|     73|       1|        1|  0.86888|   0.04241|   0.94420|  0.79957|treatment=1 |
-    ## |    9|     71|       0|        1|  0.86888|   0.04241|   0.94420|  0.79957|treatment=1 |
     ## |   10|     70|       1|        1|  0.85647|   0.04479|   0.93506|  0.78449|treatment=1 |
     ## |   11|     68|       1|        2|  0.84388|   0.04718|   0.92562|  0.76935|treatment=1 |
-    ## |   12|     65|       0|        3|  0.84388|   0.04718|   0.92562|  0.76935|treatment=1 |
-    ## |   13|     62|       0|        5|  0.84388|   0.04718|   0.92562|  0.76935|treatment=1 |
     ## |   14|     57|       1|        5|  0.82907|   0.05039|   0.91513|  0.75111|treatment=1 |
-    ## |   15|     51|       0|        1|  0.82907|   0.05039|   0.91513|  0.75111|treatment=1 |
     ## |   16|     50|       1|        2|  0.81249|   0.05429|   0.90371|  0.73048|treatment=1 |
     ## |   17|     47|       2|        4|  0.77792|   0.06239|   0.87910|  0.68838|treatment=1 |
     ## |   18|     41|       2|        2|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   20|     37|       0|        2|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   21|     35|       0|        3|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   22|     32|       0|        4|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   23|     28|       0|        3|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   25|     25|       0|        1|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   27|     24|       0|        1|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   30|     23|       0|        2|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   31|     21|       0|        4|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   33|     17|       0|        1|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   35|     16|       0|        2|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   38|     14|       0|        3|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
-    ## |   41|     11|       0|        2|  0.73997|   0.07172|   0.85165|  0.64294|treatment=1 |
     ## |   42|      9|       1|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   46|      7|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   49|      6|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   56|      5|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   62|      4|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   67|      3|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   71|      2|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
-    ## |   76|      1|       0|        1|  0.65775|   0.13796|   0.86197|  0.50192|treatment=1 |
 
 ##### Survival Curve Plot
 
@@ -174,3 +131,50 @@ ggsurvplot(q1_fit, conf.int = TRUE)
 ```
 
 ![](homework-03_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+------------------------------------------------------------------------
+
+### Question 2
+
+Test whether the survival curves for the two treatment groups are the
+same using both the log-rank test and Wilcoxon test at *alpha* = 0.05.
+Give the null and alternative hypothesis, test statistic, degrees of
+freedom, p-value, and conclusion for each test. Explain the difference
+between the two tests.
+
+##### Log-Rank Test
+
+``` r
+survdiff(Surv(time = time_to_infection, event = infection) ~ treatment, data = hw3_data) %>% 
+    broom::glance() %>% 
+    knitr::kable(
+        col.names = c("test statistic", "degrees of freedom", "p-value"),
+        align = "c",
+        digits = 3)
+```
+
+| test statistic | degrees of freedom | p-value |
+|:--------------:|:------------------:|:-------:|
+|     3.792      |         1          |  0.051  |
+
+##### Wilcoxon Test
+
+``` r
+survdiff(Surv(time = time_to_infection, event = infection) ~ treatment, data = hw3_data, rho = 1) %>% 
+    broom::glance() %>% 
+    knitr::kable(
+        col.names = c("test statistic", "degrees of freedom", "p-value"),
+        align = "c",
+        digits = 3)
+```
+
+| test statistic | degrees of freedom | p-value |
+|:--------------:|:------------------:|:-------:|
+|      3.38      |         1          |  0.066  |
+
+### Question 3
+
+Test whether the survival functions are the same among the four groups
+using the generalized log-rank test at *alpha* = 0.05. Give the null and
+alternative hypothesis, test statistic, degrees of freedom, p-value, and
+conclusion.
