@@ -21,10 +21,48 @@ The ”HW3Data” gives the time until staphylococcus infection (in days) for 15
 
 ***  
 
-1. Use R to compute the Kaplan-Meier estimator and 95% CI of the survival function for the routine bathing group, and also for the body-cleansing group (only keep the K-M estimates for unique event time points). Generate a graph of the survival functions in the two treatment groups. Interpret the graph. (*Hint: What do you observe about the difference of the survival functions between the two groups?*)  
+### Question 1  
 
-```{r}
+Use R to compute the Kaplan-Meier estimator and 95% CI of the survival function for the routine bathing group, and also for the body-cleansing group (only keep the K-M estimates for unique event time points). Generate a graph of the survival functions in the two treatment groups. Interpret the graph. (*Hint: What do you observe about the difference of the survival functions between the two groups?*)  
+
+```{r, message = FALSE}
 hw3_data <- read_csv("./data/hw3_data.csv",
                      col_names = c("id", "treatment", "pct_burned", "time_to_infection", "infection"))
+
+hw3_data
+```
+
+#### Estimate the survival curve  
+
+```{r}
+q1_fit <- survfit(Surv(time = time_to_infection, event = infection) ~ treatment, data = hw3_data)
+```
+
+#### Kaplan-Meier Estimators
+
+##### Routine Bathing Group  
+
+```{r}
+q1_fit %>% 
+    broom::tidy() %>% 
+    filter(strata == "treatment=0") %>% 
+    knitr::kable(digits = 5) %>% 
+    print(n = Inf)
+```
+
+##### Body-Cleansing Group  
+
+```{r}
+q1_fit %>% 
+    broom::tidy() %>% 
+    filter(strata == "treatment=1") %>% 
+    knitr::kable(digits = 5) %>% 
+    print(n = Inf)
+```
+
+##### Survival Curve Plot  
+
+```{r}
+ggsurvplot(q1_fit, conf.int = TRUE)
 ```
 
