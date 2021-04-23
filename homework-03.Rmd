@@ -1,0 +1,9 @@
+---
+title: "P8110 - Applied Regression II - Homework #3"
+output: github_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
