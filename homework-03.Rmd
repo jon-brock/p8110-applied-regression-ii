@@ -4,6 +4,7 @@ output: github_document
 ---
 
 ```{r setup, message = FALSE, warning = FALSE}
+library(coin)
 library(survival)
 library(survminer)
 library(tidyverse)
@@ -63,14 +64,16 @@ q1_fit %>%
 ##### Survival Curve Plot  
 
 ```{r}
-ggsurvplot(q1_fit, conf.int = TRUE)
+ggsurvplot(q1_fit, conf.int = TRUE, pval = TRUE, pval.method = TRUE, surv.median.line = "v")
 ```
+
+Interpret the graph: The probability of NOT getting staphylocous aureaus infection is higher among the Body Cleansing group, as compared to the Routine Bathing group. This suggests that Body Cleansing is a better preventive measure against infection. The survival probabilities begin to diverge around day 42 and onward.  
 
 ***  
 
 ### Question 2  
 
-Test whether the survival curves for the two treatment groups are the same using both the log-rank test and Wilcoxon test at *alpha* = 0.05. Give the null and alternative hypothesis, test statistic, degrees of freedom, p-value, and conclusion for each test. Explain the difference between the two tests.  
+Test whether the survival curves for the two treatment groups are the same using both the log-rank test and Wilcoxon test at $\alpha$ = 0.05. Give the null and alternative hypothesis, test statistic, degrees of freedom, p-value, and conclusion for each test. Explain the difference between the two tests.  
 
 ##### Log-Rank Test  
 
@@ -82,6 +85,14 @@ survdiff(Surv(time = time_to_infection, event = infection) ~ treatment, data = h
         align = "c",
         digits = 3)
 ```
+
+Alternatively, we can find a similar result using the `logrank_test` function in the `coin` package.  
+
+```{r}
+logrank_test(Surv(time = time_to_infection, event = infection) ~ factor(treatment), data = hw3_data)
+```
+
+If we simply square the Z value in our output we will get our $\chi^2$ value of `r round((-1.9481)^2, 3)`. This is pretty much the same value as our output.  
 
 ##### Wilcoxon Test  
 
@@ -96,6 +107,6 @@ survdiff(Surv(time = time_to_infection, event = infection) ~ treatment, data = h
 
 ### Question 3  
 
-Test whether the survival functions are the same among the four groups using the generalized log-rank test at *alpha* = 0.05. Give the null and alternative hypothesis, test statistic, degrees of freedom, p-value, and conclusion.  
+Test whether the survival functions are the same among the four groups using the generalized log-rank test at $\alpha$ = 0.05. Give the null and alternative hypothesis, test statistic, degrees of freedom, p-value, and conclusion.  
 
 

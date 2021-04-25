@@ -2,6 +2,7 @@ P8110 - Applied Regression II - Homework \#3
 ================
 
 ``` r
+library(coin)
 library(survival)
 library(survminer)
 library(tidyverse)
@@ -127,20 +128,26 @@ q1_fit %>%
 ##### Survival Curve Plot
 
 ``` r
-ggsurvplot(q1_fit, conf.int = TRUE)
+ggsurvplot(q1_fit, conf.int = TRUE, pval = TRUE, pval.method = TRUE, surv.median.line = "v")
 ```
 
 ![](homework-03_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+Interpret the graph: The probability of NOT getting staphylocous aureaus
+infection is higher among the Body Cleansing group, as compared to the
+Routine Bathing group. This suggests that Body Cleansing is a better
+preventive measure against infection. The survival probabilities begin
+to diverge around day 42 and onward.
 
 ------------------------------------------------------------------------
 
 ### Question 2
 
 Test whether the survival curves for the two treatment groups are the
-same using both the log-rank test and Wilcoxon test at *alpha* = 0.05.
-Give the null and alternative hypothesis, test statistic, degrees of
-freedom, p-value, and conclusion for each test. Explain the difference
-between the two tests.
+same using both the log-rank test and Wilcoxon test at *α* = 0.05. Give
+the null and alternative hypothesis, test statistic, degrees of freedom,
+p-value, and conclusion for each test. Explain the difference between
+the two tests.
 
 ##### Log-Rank Test
 
@@ -156,6 +163,24 @@ survdiff(Surv(time = time_to_infection, event = infection) ~ treatment, data = h
 | test statistic | degrees of freedom | p-value |
 |:--------------:|:------------------:|:-------:|
 |     3.792      |         1          |  0.051  |
+
+Alternatively, we can find a similar result using the `logrank_test`
+function in the `coin` package.
+
+``` r
+logrank_test(Surv(time = time_to_infection, event = infection) ~ factor(treatment), data = hw3_data)
+```
+
+    ## 
+    ##  Asymptotic Two-Sample Logrank Test
+    ## 
+    ## data:  Surv(time = time_to_infection, event = infection) by factor(treatment) (0, 1)
+    ## Z = -1.9481, p-value = 0.05141
+    ## alternative hypothesis: true theta is not equal to 1
+
+If we simply square the Z value in our output we will get our
+*χ*<sup>2</sup> value of 3.795. This is pretty much the same value as
+our output.
 
 ##### Wilcoxon Test
 
@@ -175,6 +200,6 @@ survdiff(Surv(time = time_to_infection, event = infection) ~ treatment, data = h
 ### Question 3
 
 Test whether the survival functions are the same among the four groups
-using the generalized log-rank test at *alpha* = 0.05. Give the null and
+using the generalized log-rank test at *α* = 0.05. Give the null and
 alternative hypothesis, test statistic, degrees of freedom, p-value, and
 conclusion.
